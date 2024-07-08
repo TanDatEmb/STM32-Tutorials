@@ -1,0 +1,8 @@
+# ARM Cortex-M
+ARM Cortex-M là một dòng vi xử lý được thiết kế đặc biệt cho các ứng dụng nhúng. Cortex-M cung cấp hiệu suất cao với tiêu thụ năng lượng thấp và rất dễ sử dụng.
+
+Các đặc điểm chính của ARM Cortex-M bao gồm:
+- Kiến trúc Harvard: tách biệt bộ nhớ chương trình và dữ liệu.
+- Bộ xử lý 32-bit với tập lệnh Thumb-2.
+- Tích hợp NVIC (Nested Vectored Interrupt Controller) giúp quản lý ngắt hiệu quả.
+- Các chế độ hoạt động và quản lý năng lượng linh hoạt.

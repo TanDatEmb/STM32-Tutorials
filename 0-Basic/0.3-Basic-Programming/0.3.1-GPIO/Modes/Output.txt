@@ -1,0 +1,14 @@
+
+# Output Mode
+Trong chế độ Output, chân GPIO được cấu hình để gửi tín hiệu đến thiết bị bên ngoài.
+
+Các bước cấu hình:
+1. Chọn chân GPIO và cấu hình chế độ Output trong thanh ghi MODER.
+2. Ghi giá trị vào thanh ghi ODR (Output Data Register) để điều khiển chân GPIO.
+
+Ví dụ:
+```cpp
+// Cấu hình PG0 làm Output
+GPIOG->MODER |= GPIO_MODER_MODER0_0;
+GPIOG->ODR |= GPIO_ODR_OD0;  // Set PG0 high
+GPIOG->ODR &= ~GPIO_ODR_OD0; // Set PG0 low

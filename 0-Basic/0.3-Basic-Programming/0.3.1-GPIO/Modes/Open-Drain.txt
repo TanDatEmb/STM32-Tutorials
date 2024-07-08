@@ -1,0 +1,12 @@
+# Open-Drain Mode
+Trong chế độ Open-Drain, chân GPIO có thể được kéo xuống thấp hoặc để nổi (trạng thái ngắt kết nối).
+
+Các bước cấu hình:
+1. Chọn chân GPIO và cấu hình chế độ Open-Drain trong thanh ghi OTYPER.
+
+Ví dụ:
+```cpp
+// Cấu hình PG0 làm Open-Drain
+GPIOG->OTYPER |= GPIO_OTYPER_OT0;
+GPIOG->ODR |= GPIO_ODR_OD0;  // Open-Drain, không có điện áp cao
+GPIOG->ODR &= ~GPIO_ODR_OD0; // Kéo xuống thấp

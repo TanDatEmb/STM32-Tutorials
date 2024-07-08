@@ -1,0 +1,8 @@
+# Timers Overview
+Bộ định thời (Timers) trong STM32 là các ngoại vi mạnh mẽ có thể thực hiện nhiều chức năng như tạo sóng xung, đo thời gian, đo tần số, và tạo sự kiện.
+
+Các chế độ chính của bộ định thời bao gồm:
+- Basic Timer: Đếm lên, đếm xuống hoặc cả hai.
+- PWM (Pulse Width Modulation): Tạo sóng xung với độ rộng có thể thay đổi.
+- Input Capture: Ghi lại thời gian của sự kiện bên ngoài.
+- Output Compare: Tạo sự kiện tại thời điểm cụ thể.

@@ -1,0 +1,8 @@
+# ARMv7-M Architecture
+ARMv7-M là một kiến trúc của ARM được thiết kế cho các vi xử lý nhúng như Cortex-M3 và Cortex-M4.
+
+Các đặc điểm chính của ARMv7-M bao gồm:
+- Tập lệnh Thumb-2: cung cấp hiệu quả cao về mã và năng lượng.
+- Hỗ trợ quản lý ngắt vectored với NVIC.
+- Hỗ trợ bộ nhớ đồng thời cho mã và dữ liệu.
+- Hỗ trợ chế độ bảo vệ bộ nhớ (MPU).

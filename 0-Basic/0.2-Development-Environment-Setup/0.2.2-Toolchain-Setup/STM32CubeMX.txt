@@ -1,0 +1,8 @@
+# STM32CubeMX
+STM32CubeMX là một công cụ cấu hình và khởi tạo mã cho các vi điều khiển STM32.
+
+Các bước sử dụng:
+1. Tải xuống và cài đặt STM32CubeMX từ trang web của STMicroelectronics.
+2. Tạo một dự án mới và chọn vi điều khiển STM32 của bạn.
+3. Cấu hình các chân và ngoại vi theo yêu cầu của bạn.
+4. Sinh mã nguồn và nhập vào IDE của bạn.

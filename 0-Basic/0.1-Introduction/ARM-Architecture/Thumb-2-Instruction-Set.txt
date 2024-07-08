@@ -1,0 +1,7 @@
+# Thumb-2 Instruction Set
+Thumb-2 là một tập lệnh của ARM, kết hợp các lệnh 16-bit và 32-bit để tối ưu hóa hiệu quả mã và năng lượng.
+
+Lợi ích của Thumb-2 bao gồm:
+- Mã nhỏ gọn hơn, tiết kiệm bộ nhớ.
+- Hiệu suất cao nhờ vào việc sử dụng các lệnh 32-bit khi cần thiết.
+- Hỗ trợ đầy đủ các tính năng của ARM, bao gồm các lệnh điều kiện và các lệnh thao tác trên thanh ghi.

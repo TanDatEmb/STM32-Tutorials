@@ -1,0 +1,20 @@
+
+# Timer Modes
+Bộ định thời STM32 hỗ trợ nhiều chế độ hoạt động khác nhau:
+
+### Up-Counter
+Bộ định thời đếm từ 0 đến giá trị trong thanh ghi ARR.
+
+### Down-Counter
+Bộ định thời đếm ngược từ giá trị trong thanh ghi ARR về 0.
+
+### Up-Down-Counter
+Bộ định thời đếm từ 0 đến giá trị trong thanh ghi ARR rồi đếm ngược lại về 0.
+
+### PWM Modes
+Bộ định thời tạo ra sóng xung với độ rộng có thể thay đổi.
+
+Ví dụ cấu hình:
+```cpp
+// Cấu hình bộ định thời ở chế độ Up-Counter
+TIM2->CR1 &= ~TIM_CR1_DIR; // Up-counter mode

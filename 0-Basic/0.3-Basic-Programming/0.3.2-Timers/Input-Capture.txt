@@ -1,0 +1,20 @@
+# Input Capture
+Input Capture là chế độ đo thời gian của sự kiện bên ngoài bằng cách ghi lại giá trị của bộ đếm khi sự kiện xảy ra.
+
+Các bước cấu hình:
+1. Kích hoạt đồng hồ cho bộ định thời.
+2. Cấu hình chân GPIO làm đầu vào cho tín hiệu cần đo.
+3. Cấu hình kênh của bộ định thời cho chế độ Input Capture.
+
+Ví dụ:
+```cpp
+// Kích hoạt đồng hồ cho TIM2 và GPIOA
+RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+
+// Cấu hình PA0 làm đầu vào cho TIM2_CH1
+GPIOA->MODER |= GPIO_MODER_MODER0_1;
+GPIOA->AFR[0] |= 0x1 << (0 * 4); // AF1 for TIM2
+
+// Cấu hình TIM2_CH1 cho Input Capture
+TIM2->CCMR1

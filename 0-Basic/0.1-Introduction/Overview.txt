@@ -1,0 +1,8 @@
+
+# Overview
+STM32 là một dòng vi điều khiển ARM Cortex-M do STMicroelectronics sản xuất. 
+Dòng vi điều khiển này rất phổ biến trong các ứng dụng nhúng do khả năng mạnh mẽ, 
+tiêu thụ năng lượng thấp và bộ công cụ phát triển phong phú.
+
+Mục đích của tài liệu này là cung cấp một hướng dẫn toàn diện từ cơ bản đến nâng cao
+về cách lập trình và sử dụng STM32, bao gồm các chức năng cơ bản, giao tiếp, và các tính năng cụ thể của MCU.

@@ -1,0 +1,21 @@
+# GPIO Configuration
+Cấu hình GPIO bao gồm các bước:
+1. Kích hoạt đồng hồ cho GPIO bằng cách thiết lập bit tương ứng trong thanh ghi RCC_AHB1ENR.
+2. Cấu hình chế độ cho chân GPIO trong thanh ghi MODER.
+3. (Tùy chọn) Cấu hình chế độ Pull-Up/Pull-Down trong thanh ghi PUPDR.
+4. (Tùy chọn) Cấu hình kiểu đầu ra trong thanh ghi OTYPER.
+5. Đọc hoặc ghi giá trị vào chân GPIO qua các thanh ghi IDR hoặc ODR.
+
+Ví dụ cấu hình tổng thể:
+```cpp
+// Kích hoạt đồng hồ cho GPIOG
+RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN;
+
+// Cấu hình PG0 làm Output
+GPIOG->MODER |= GPIO_MODER_MODER0_0;
+
+// Cấu hình PG0 làm Pull-Up
+GPIOG->PUPDR |= GPIO_PUPDR_PUPD0_0;
+
+// Ghi giá trị cao vào PG0
+GPIOG->ODR |= GPIO_ODR_OD0;

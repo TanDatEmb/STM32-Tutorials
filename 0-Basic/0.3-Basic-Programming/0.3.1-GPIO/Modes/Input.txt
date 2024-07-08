@@ -1,0 +1,12 @@
+# Input Mode
+Trong chế độ Input, chân GPIO được cấu hình để nhận tín hiệu từ thiết bị bên ngoài.
+
+Các bước cấu hình:
+1. Chọn chân GPIO và cấu hình chế độ Input trong thanh ghi MODER.
+2. Đọc giá trị của chân GPIO từ thanh ghi IDR (Input Data Register).
+
+Ví dụ:
+```cpp
+// Cấu hình PG0 làm Input
+GPIOG->MODER &= ~GPIO_MODER_MODER0;
+int value = (GPIOG->IDR & GPIO_IDR_ID0) ? 1 : 0;

@@ -1,0 +1,7 @@
+# GNU Arm Embedded Toolchain
+GNU Arm Embedded Toolchain là một tập hợp các công cụ dòng lệnh để biên dịch mã cho các vi điều khiển ARM.
+
+Các bước cài đặt:
+1. Tải xuống GNU Arm Embedded Toolchain từ trang web chính thức của ARM.
+2. Giải nén và thêm đường dẫn tới các công cụ vào biến môi trường PATH.
+3. Sử dụng `arm-none-eabi-gcc` để biên dịch mã nguồn.

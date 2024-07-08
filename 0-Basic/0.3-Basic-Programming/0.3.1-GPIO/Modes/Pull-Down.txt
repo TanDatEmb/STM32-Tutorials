@@ -1,0 +1,10 @@
+# Pull-Down Mode
+Trong chế độ Pull-Down, một điện trở kéo xuống được kết nối với chân GPIO để giữ nó ở mức logic thấp khi không có tín hiệu đầu vào.
+
+Các bước cấu hình:
+1. Chọn chân GPIO và cấu hình chế độ Pull-Down trong thanh ghi PUPDR.
+
+Ví dụ:
+```cpp
+// Cấu hình PG0 làm Pull-Down
+GPIOG->PUPDR |= GPIO_PUPDR_PUPD0_1;

@@ -1,0 +1,28 @@
+# Button Input
+Ví dụ này minh họa cách đọc trạng thái của nút nhấn bằng cách sử dụng chân GPIO trong chế độ Input.
+
+```cpp
+#include "stm32f4xx.h"
+
+int main(void) {
+    // Kích hoạt đồng hồ cho GPIOG và GPIOA
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN | RCC_AHB1ENR_GPIOAEN;
+    
+    // Cấu hình PA0 làm Input (nút nhấn)
+    GPIOA->MODER &= ~GPIO_MODER_MODER0;
+    
+    // Cấu hình PG13 làm Output (LED)
+    GPIOG->MODER |= GPIO_MODER_MODER13_0;
+
+    while (1) {
+        // Đọc trạng thái của nút nhấn
+        int button_pressed = (GPIOA->IDR & GPIO_IDR_ID0) ? 1 : 0;
+        
+        // Bật/tắt LED dựa trên trạng thái của nút nhấn
+        if (button_pressed) {
+            GPIOG->ODR |= GPIO_ODR_OD13;
+        } else {
+            GPIOG->ODR &= ~GPIO_ODR_OD13;
+        }
+    }
+}

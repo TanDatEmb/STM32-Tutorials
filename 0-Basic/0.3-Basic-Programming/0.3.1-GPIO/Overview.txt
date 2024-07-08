@@ -1,0 +1,8 @@
+# GPIO Overview
+GPIO (General-Purpose Input/Output) là các chân có thể được cấu hình làm đầu vào hoặc đầu ra để giao tiếp với các thiết bị bên ngoài.
+
+GPIO có thể hoạt động ở các chế độ khác nhau như:
+- Input: Nhận tín hiệu từ thiết bị bên ngoài.
+- Output: Gửi tín hiệu đến thiết bị bên ngoài.
+- Pull-Up/Pull-Down: Kết nối với điện trở kéo lên hoặc kéo xuống.
+- Open-Drain: Tạo tín hiệu đầu ra mà không cần điện áp cao.

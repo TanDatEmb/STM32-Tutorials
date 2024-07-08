@@ -1,0 +1,25 @@
+# Toggle LED
+Ví dụ này minh họa cách bật/tắt LED bằng cách sử dụng chân GPIO trong chế độ Output.
+
+```cpp
+#include "stm32f4xx.h"
+
+void delay(int count) {
+    while(count--);
+}
+
+int main(void) {
+    // Kích hoạt đồng hồ cho GPIOG
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN;
+    
+    // Cấu hình PG13 làm Output
+    GPIOG->MODER |= GPIO_MODER_MODER13_0;
+
+    while (1) {
+        // Toggle LED
+        GPIOG->ODR ^= GPIO_ODR_OD13;
+        
+        // Delay
+        delay(1000000);
+    }
+}

@@ -1,0 +1,7 @@
+# Bus Interfaces
+Các vi điều khiển ARM Cortex-M sử dụng nhiều loại bus để giao tiếp giữa các thành phần nội bộ và ngoại vi.
+
+Các loại bus chính bao gồm:
+- AHB (Advanced High-performance Bus): dành cho các thiết bị tốc độ cao.
+- APB (Advanced Peripheral Bus): dành cho các thiết bị ngoại vi tốc độ thấp hơn.
+- AXI (Advanced eXtensible Interface): dành cho các thiết bị có hiệu suất cực cao.

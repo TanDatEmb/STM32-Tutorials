@@ -1,0 +1,7 @@
+# VSCode with PlatformIO
+Visual Studio Code (VSCode) kết hợp với PlatformIO là một lựa chọn IDE mạnh mẽ và linh hoạt cho việc phát triển nhúng với STM32.
+
+Các bước cài đặt:
+1. Cài đặt VSCode từ trang web chính thức.
+2. Cài đặt extension PlatformIO IDE từ VSCode Marketplace.
+3. Tạo một dự án mới với PlatformIO và chọn STM32 làm nền tảng.

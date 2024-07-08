@@ -1,0 +1,7 @@
+# Keil MDK
+Keil MDK (Microcontroller Development Kit) là một môi trường phát triển tích hợp (IDE) phổ biến dành cho các vi điều khiển ARM, bao gồm cả STM32.
+
+Các bước cài đặt Keil MDK:
+1. Tải xuống Keil MDK từ trang web chính thức.
+2. Chạy trình cài đặt và làm theo hướng dẫn.
+3. Cài đặt gói hỗ trợ thiết bị (Device Support Pack) cho STM32 từ bên trong Keil MDK.

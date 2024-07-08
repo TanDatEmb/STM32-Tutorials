@@ -1,0 +1,7 @@
+# Debugging Setup
+Thiết lập gỡ lỗi là một bước quan trọng trong quá trình phát triển.
+
+Các bước thực hiện:
+1. Cấu hình OpenOCD hoặc một công cụ gỡ lỗi khác.
+2. Kết nối với vi điều khiển của bạn qua JTAG hoặc SWD.
+3. Sử dụng IDE của bạn để đặt điểm dừng, theo dõi biến và gỡ lỗi mã.

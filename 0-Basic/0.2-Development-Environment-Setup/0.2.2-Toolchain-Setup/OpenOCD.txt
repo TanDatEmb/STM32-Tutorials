@@ -1,0 +1,7 @@
+# OpenOCD
+OpenOCD (Open On-Chip Debugger) là một công cụ mã nguồn mở để lập trình và gỡ lỗi các vi điều khiển nhúng.
+
+Các bước cài đặt:
+1. Tải xuống và cài đặt OpenOCD từ trang web chính thức hoặc qua các gói quản lý phần mềm.
+2. Cấu hình tệp `openocd.cfg` để kết nối với vi điều khiển STM32 của bạn.
+3. Sử dụng OpenOCD để lập trình và gỡ lỗi chương trình của bạn.

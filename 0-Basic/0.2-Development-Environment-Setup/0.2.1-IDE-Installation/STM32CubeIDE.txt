@@ -1,0 +1,7 @@
+# STM32CubeIDE
+STM32CubeIDE là một IDE tích hợp và đầy đủ tính năng do STMicroelectronics cung cấp, hỗ trợ tất cả các dòng vi điều khiển STM32.
+
+Các bước cài đặt STM32CubeIDE:
+1. Tải xuống STM32CubeIDE từ trang web chính thức của STMicroelectronics.
+2. Chạy trình cài đặt và làm theo hướng dẫn.
+3. Tạo một dự án mới và cấu hình vi điều khiển STM32 của bạn.

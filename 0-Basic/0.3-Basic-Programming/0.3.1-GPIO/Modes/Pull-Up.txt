@@ -1,0 +1,10 @@
+# Pull-Up Mode
+Trong chế độ Pull-Up, một điện trở kéo lên được kết nối với chân GPIO để giữ nó ở mức logic cao khi không có tín hiệu đầu vào.
+
+Các bước cấu hình:
+1. Chọn chân GPIO và cấu hình chế độ Pull-Up trong thanh ghi PUPDR.
+
+Ví dụ:
+```cpp
+// Cấu hình PG0 làm Pull-Up
+GPIOG->PUPDR |= GPIO_PUPDR_PUPD0_0;
