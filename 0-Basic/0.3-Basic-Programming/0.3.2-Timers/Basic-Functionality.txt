@@ -17,3 +17,70 @@ TIM2->ARR = 1000 - 1;  // Auto-reload value
 
 // Bắt đầu bộ định thời
 TIM2->CR1 |= TIM_CR1_CEN;
+
+#include "stm32f4xx.h"
+
+void Timer_Config(void) {
+    // Bật xung nhịp cho timer
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+
+    TIM_TimeBaseInitTypeDef timerInitStructure;
+    timerInitStructure.TIM_Prescaler = 16000 - 1; // Chia xung nhịp
+    timerInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    timerInitStructure.TIM_Period = 1000 - 1; // Đếm từ 0 đến 999
+    timerInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+    timerInitStructure.TIM_RepetitionCounter = 0;
+
+    TIM_TimeBaseInit(TIM2, &timerInitStructure);
+    TIM_Cmd(TIM2, ENABLE); // Bật timer
+}
+
+int main(void) {
+    SystemInit(); // Khởi tạo hệ thống
+    Timer_Config(); // Cài đặt timer
+
+    while (1) {
+        // Vòng lặp chính
+    }
+}
+
+#include "stm32f4xx.h"
+
+void Timer_Config(void) {
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+
+    TIM_TimeBaseInitTypeDef timerInitStructure;
+    timerInitStructure.TIM_Prescaler = 16000 - 1;
+    timerInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    timerInitStructure.TIM_Period = 1000 - 1;
+    timerInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+    timerInitStructure.TIM_RepetitionCounter = 0;
+
+    TIM_TimeBaseInit(TIM2, &timerInitStructure);
+    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE); // Bật ngắt cho timer
+
+    NVIC_InitTypeDef nvicStructure;
+    nvicStructure.NVIC_IRQChannel = TIM2_IRQn;
+    nvicStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    nvicStructure.NVIC_IRQChannelSubPriority = 1;
+    nvicStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvicStructure);
+
+    TIM_Cmd(TIM2, ENABLE);
+}
+
+void TIM2_IRQHandler(void) {
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
+        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+        // Code xử lý ngắt ở đây
+    }
+}
+
+int main(void) {
+    SystemInit();
+    Timer_Config();
+
+    while (1) {
+        // Vòng lặp chính
+    }
+}

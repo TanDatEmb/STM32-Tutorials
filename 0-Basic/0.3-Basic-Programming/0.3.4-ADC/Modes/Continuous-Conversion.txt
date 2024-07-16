@@ -1,1 +1,27 @@
-Continuous-Conversion 
+# Continuous Conversion
+Chế độ Continuous Conversion cho phép ADC chuyển đổi liên tục các tín hiệu analog sang digital.
+
+Các bước cấu hình:
+1. Kích hoạt đồng hồ cho ADC và GPIO.
+2. Cấu hình chân GPIO làm đầu vào analog.
+3. Cấu hình ADC cho chế độ Continuous Conversion.
+
+Ví dụ:
+```cpp
+// Kích hoạt đồng hồ cho ADC1 và GPIOA
+RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
+RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+
+// Cấu hình PA0 làm đầu vào analog
+GPIOA->MODER |= GPIO_MODER_MODER0;
+
+// Cấu hình ADC1 cho Continuous Conversion
+ADC1->SQR3 = 0; // Chọn kênh 0
+ADC1->CR2 |= ADC_CR2_ADON | ADC_CR2_CONT; // Bật ADC và chế độ Continuous Conversion
+ADC1->CR2 |= ADC_CR2_SWSTART; // Bắt đầu chuyển đổi
+
+while (1) {
+    // Chờ chuyển đổi hoàn thành
+    while (!(ADC1->SR & ADC_SR_EOC));
+    int result = ADC1->DR; // Đọc giá trị chuyển đổi
+}

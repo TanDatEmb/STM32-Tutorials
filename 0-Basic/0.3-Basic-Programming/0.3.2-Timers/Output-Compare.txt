@@ -1,1 +1,75 @@
-Output-Compare 
+# Output Compare
+Output Compare là chế độ tạo ra sự kiện hoặc ngắt tại một thời điểm cụ thể dựa trên giá trị của bộ đếm.
+
+Các bước cấu hình:
+1. Kích hoạt đồng hồ cho bộ định thời.
+2. Cấu hình kênh của bộ định thời cho chế độ Output Compare.
+3. Đặt giá trị so sánh trong thanh ghi CCR.
+
+Ví dụ:
+```cpp
+// Kích hoạt đồng hồ cho TIM2
+RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+
+// Cấu hình TIM2_CH1 cho Output Compare
+TIM2->CCMR1 |= TIM_CCMR1_OC1M_0 | TIM_CCMR1_OC1M_1;
+TIM2->CCER |= TIM_CCER_CC1E;
+TIM2->CCR1 = 500; // Giá trị so sánh
+
+// Bắt đầu bộ định thời
+TIM2->CR1 |= TIM_CR1_CEN;
+
+#### 2. **Output Compare Mode**
+
+Output Compare Mode được sử dụng để tạo ra các tín hiệu đầu ra có chu kỳ dựa trên giá trị của counter. 
+Chế độ này hữu ích trong việc tạo ra các tín hiệu xung nhịp chính xác cho các ứng dụng điều khiển thời gian thực.
+
+**Trường Hợp Sử Dụng:**
+- Tạo tín hiệu xung nhịp chính xác.
+- Điều khiển thời gian thực cho các hệ thống nhúng.
+
+**Ví dụ:**
+```c
+#include "stm32f4xx.h"
+
+void OutputCompare_Config(void) {
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+
+    GPIO_InitTypeDef gpioInitStructure;
+    gpioInitStructure.GPIO_Pin = GPIO_Pin_0;
+    gpioInitStructure.GPIO_Mode = GPIO_Mode_AF;
+    gpioInitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+    gpioInitStructure.GPIO_OType = GPIO_OType_PP;
+    gpioInitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    GPIO_Init(GPIOB, &gpioInitStructure);
+    GPIO_PinAFConfig(GPIOB, GPIO_PinSource0, GPIO_AF_TIM3);
+
+    TIM_TimeBaseInitTypeDef timerInitStructure;
+    timerInitStructure.TIM_Prescaler = 16000 - 1;
+    timerInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    timerInitStructure.TIM_Period = 1000 - 1;
+    timerInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+    timerInitStructure.TIM_RepetitionCounter = 0;
+    TIM_TimeBaseInit(TIM3, &timerInitStructure);
+
+    TIM_OCInitTypeDef outputCompareInit;
+    outputCompareInit.TIM_OCMode = TIM_OCMode_Toggle;
+    outputCompareInit.TIM_OutputState = TIM_OutputState_Enable;
+    outputCompareInit.TIM_Pulse = 500; // Giá trị so sánh
+    outputCompareInit.TIM_OCPolarity = TIM_OCPolarity_High;
+    TIM_OC1Init(TIM3, &outputCompareInit);
+    TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Disable);
+
+    TIM_Cmd(TIM3, ENABLE);
+}
+
+int main(void) {
+    SystemInit();
+    OutputCompare_Config();
+
+    while (1) {
+        // Vòng lặp chính
+    }
+}
+```

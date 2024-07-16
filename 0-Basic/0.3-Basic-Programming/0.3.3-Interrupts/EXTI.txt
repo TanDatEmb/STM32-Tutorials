@@ -1,1 +1,42 @@
-EXTI 
+# External Interrupts
+External Interrupts cho phép bạn kích hoạt ngắt từ các chân GPIO khi có sự thay đổi trạng thái (từ mức cao xuống thấp hoặc ngược lại).
+
+Các bước cấu hình:
+1. Kích hoạt đồng hồ cho GPIO và EXTI (External Interrupt).
+2. Cấu hình chân GPIO làm đầu vào.
+3. Cấu hình EXTI cho chân GPIO đó.
+4. Cấu hình NVIC (Nested Vectored Interrupt Controller) để bật ngắt.
+
+Ví dụ:
+```cpp
+#include "stm32f4xx.h"
+
+void EXTI0_IRQHandler(void) {
+    // Xử lý ngắt
+    if (EXTI->PR & EXTI_PR_PR0) {
+        // Clear pending bit
+        EXTI->PR |= EXTI_PR_PR0;
+        // Code xử lý ngắt
+    }
+}
+
+int main(void) {
+    // Kích hoạt đồng hồ cho GPIOA và SYSCFG
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+    RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
+    
+    // Cấu hình PA0 làm đầu vào
+    GPIOA->MODER &= ~GPIO_MODER_MODER0;
+
+    // Cấu hình EXTI cho PA0
+    SYSCFG->EXTICR[0] |= SYSCFG_EXTICR1_EXTI0_PA;
+    EXTI->IMR |= EXTI_IMR_MR0;
+    EXTI->FTSR |= EXTI_FTSR_TR0; // Falling edge trigger
+    
+    // Bật ngắt trong NVIC
+    NVIC_EnableIRQ(EXTI0_IRQn);
+
+    while (1) {
+        // Chương trình chính
+    }
+}

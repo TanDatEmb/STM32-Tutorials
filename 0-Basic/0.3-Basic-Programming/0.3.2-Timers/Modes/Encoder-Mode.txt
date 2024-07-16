@@ -1,0 +1,50 @@
+#### 3. **Encoder Mode**
+
+Encoder Mode được sử dụng để đếm xung từ các encoder quay, giúp đo lường vị trí và tốc độ quay của động cơ.
+
+**Trường Hợp Sử Dụng:**
+- Đo lường vị trí và tốc độ quay của động cơ.
+- Điều khiển các hệ thống cơ điện tử yêu cầu phản hồi vị trí chính xác.
+
+**Ví dụ:**
+```c
+#include "stm32f4xx.h"
+
+void Encoder_Config(void) {
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+
+    GPIO_InitTypeDef gpioInitStructure;
+    gpioInitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
+    gpioInitStructure.GPIO_Mode = GPIO_Mode_AF;
+    gpioInitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+    gpioInitStructure.GPIO_OType = GPIO_OType_PP;
+    gpioInitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    GPIO_Init(GPIOA, &gpioInitStructure);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_TIM3);
+
+    TIM_TimeBaseInitTypeDef timerInitStructure;
+    timerInitStructure.TIM_Prescaler = 0;
+    timerInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    timerInitStructure.TIM_Period = 0xFFFF;
+    timerInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+    timerInitStructure.TIM_RepetitionCounter = 0;
+    TIM_TimeBaseInit(TIM3, &timerInitStructure);
+
+    TIM_EncoderInterfaceConfig(TIM3, TIM_EncoderMode_TI12, TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);
+    TIM_SetCounter(TIM3, 0);
+    TIM_Cmd(TIM3, ENABLE);
+}
+
+int main(void) {
+    SystemInit();
+    Encoder_Config();
+
+    while (1) {
+        // Đọc giá trị encoder
+        int16_t encoderValue = TIM_GetCounter(TIM3);
+        // Xử lý giá trị encoderValue
+    }
+}
+```

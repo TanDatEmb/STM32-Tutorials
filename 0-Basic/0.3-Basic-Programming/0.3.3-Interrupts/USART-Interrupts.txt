@@ -1,0 +1,46 @@
+
+# USART Interrupts
+USART Interrupts cho phép bạn xử lý ngắt khi có dữ liệu mới nhận được hoặc khi truyền dữ liệu hoàn thành.
+
+Các bước cấu hình:
+1. Kích hoạt đồng hồ cho USART và GPIO.
+2. Cấu hình chân GPIO cho USART.
+3. Cấu hình USART.
+4. Bật ngắt cho USART trong thanh ghi CR1.
+5. Cấu hình NVIC để bật ngắt.
+
+Ví dụ:
+```cpp
+#include "stm32f4xx.h"
+
+void USART2_IRQHandler(void) {
+    // Xử lý ngắt nhận dữ liệu
+    if (USART2->SR & USART_SR_RXNE) {
+        // Đọc dữ liệu nhận được
+        char data = USART2->DR;
+        // Code xử lý dữ liệu
+    }
+}
+
+int main(void) {
+    // Kích hoạt đồng hồ cho USART2 và GPIOA
+    RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+    
+    // Cấu hình PA2 làm TX và PA3 làm RX
+    GPIOA->MODER |= GPIO_MODER_MODER2_1 | GPIO_MODER_MODER3_1;
+    GPIOA->AFR[0] |= 0x7 << (2 * 4) | 0x7 << (3 * 4); // AF7 for USART2
+    
+    // Cấu hình USART2
+    USART2->BRR = 0x0683; // 9600 baud rate
+    USART2->CR1 |= USART_CR1_RE | USART_CR1_TE; // Bật nhận và truyền
+    USART2->CR1 |= USART_CR1_RXNEIE; // Bật ngắt nhận dữ liệu
+    USART2->CR1 |= USART_CR1_UE; // Bật USART
+
+    // Bật ngắt trong NVIC
+    NVIC_EnableIRQ(USART2_IRQn);
+
+    while (1) {
+        // Chương trình chính
+    }
+}

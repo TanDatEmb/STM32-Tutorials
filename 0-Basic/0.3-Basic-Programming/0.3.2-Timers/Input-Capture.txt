@@ -17,4 +17,78 @@ GPIOA->MODER |= GPIO_MODER_MODER0_1;
 GPIOA->AFR[0] |= 0x1 << (0 * 4); // AF1 for TIM2
 
 // Cấu hình TIM2_CH1 cho Input Capture
-TIM2->CCMR1
+TIM2->CCMR1 |= TIM_CCMR1_CC1S_0;
+TIM2->CCER |= TIM_CCER_CC1E;
+
+// Bắt đầu bộ định thời
+TIM2->CR1 |= TIM_CR1_CEN;
+
+#### 1. **Input Capture Mode**
+
+Input Capture Mode được sử dụng để bắt tín hiệu đầu vào và lưu lại giá trị của counter tại thời điểm tín hiệu thay đổi. 
+Chế độ này thường được sử dụng để đo thời gian giữa các sự kiện (ví dụ như đo tần số của tín hiệu vào).
+
+**Trường Hợp Sử Dụng:**
+- Đo tần số tín hiệu.
+- Đo khoảng thời gian giữa các xung nhịp.
+
+**Ví dụ:**
+```c
+#include "stm32f4xx.h"
+
+void InputCapture_Config(void) {
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+
+    GPIO_InitTypeDef gpioInitStructure;
+    gpioInitStructure.GPIO_Pin = GPIO_Pin_0;
+    gpioInitStructure.GPIO_Mode = GPIO_Mode_AF;
+    gpioInitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+    gpioInitStructure.GPIO_OType = GPIO_OType_PP;
+    gpioInitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    GPIO_Init(GPIOA, &gpioInitStructure);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_TIM2);
+
+    TIM_TimeBaseInitTypeDef timerInitStructure;
+    timerInitStructure.TIM_Prescaler = 16000 - 1;
+    timerInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    timerInitStructure.TIM_Period = 0xFFFF;
+    timerInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+    timerInitStructure.TIM_RepetitionCounter = 0;
+    TIM_TimeBaseInit(TIM2, &timerInitStructure);
+
+    TIM_ICInitTypeDef inputCaptureInit;
+    inputCaptureInit.TIM_Channel = TIM_Channel_1;
+    inputCaptureInit.TIM_ICPolarity = TIM_ICPolarity_Rising;
+    inputCaptureInit.TIM_ICSelection = TIM_ICSelection_DirectTI;
+    inputCaptureInit.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+    inputCaptureInit.TIM_ICFilter = 0x0;
+    TIM_ICInit(TIM2, &inputCaptureInit);
+
+    TIM_ITConfig(TIM2, TIM_IT_CC1, ENABLE);
+    NVIC_InitTypeDef nvicStructure;
+    nvicStructure.NVIC_IRQChannel = TIM2_IRQn;
+    nvicStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    nvicStructure.NVIC_IRQChannelSubPriority = 1;
+    nvicStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvicStructure);
+
+    TIM_Cmd(TIM2, ENABLE);
+}
+
+void TIM2_IRQHandler(void) {
+    if (TIM_GetITStatus(TIM2, TIM_IT_CC1) != RESET) {
+        TIM_ClearITPendingBit(TIM2, TIM_IT_CC1);
+        uint16_t capturedValue = TIM_GetCapture1(TIM2);
+        // Xử lý giá trị capturedValue
+    }
+}
+
+int main(void) {
+    SystemInit();
+    InputCapture_Config();
+
+    while (1) {
+        // Vòng lặp chính
+    }
+}

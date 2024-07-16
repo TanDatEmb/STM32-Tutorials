@@ -6,3 +6,49 @@ GPIO có thể hoạt động ở các chế độ khác nhau như:
 - Output: Gửi tín hiệu đến thiết bị bên ngoài.
 - Pull-Up/Pull-Down: Kết nối với điện trở kéo lên hoặc kéo xuống.
 - Open-Drain: Tạo tín hiệu đầu ra mà không cần điện áp cao.
+- Input Hi-Z: Đầu vào trở kháng cao, để không ảnh hướng đến các tín hiệu khác trên mạnh, giảm tiêu thụ điện năng
+
+
+### 1. GPIOx_MODER (GPIO port mode register)
+- Kích thước: 32-bit
+- Chức năng: Cấu hình chế độ cho từng chân của cổng GPIO (00: Input mode, 01: General purpose output mode, 10: Alternate function mode, 11: Analog mode).
+
+### 2. GPIOx_OTYPER (GPIO port output type register)
+- Kích thước: 16-bit
+- Chức năng: Cấu hình kiểu xuất (output type) cho các chân (0: Output push-pull, 1: Output open-drain).
+
+### 3. GPIOx_OSPEEDR (GPIO port output speed register)
+- Kích thước: 32-bit
+- Chức năng: Cấu hình tốc độ xuất cho từng chân (00: Low speed, 01: Medium speed, 10: High speed, 11: Very high speed).
+
+### 4. GPIOx_PUPDR (GPIO port pull-up/pull-down register)
+- Kích thước: 32-bit
+- Chức năng: Cấu hình chế độ pull-up/pull-down cho từng chân (00: No pull-up, pull-down, 01: Pull-up, 10: Pull-down, 11: Reserved).
+
+### 5. GPIOx_IDR (GPIO port input data register)
+- Kích thước: 16-bit
+- Chức năng: Đọc giá trị logic hiện tại của các chân đầu vào.
+
+### 6. GPIOx_ODR (GPIO port output data register)
+- Kích thước: 16-bit
+- Chức năng: Ghi giá trị logic ra các chân đầu ra.
+
+### 7. GPIOx_BSRR (GPIO port bit set/reset register)
+- Kích thước: 32-bit
+- Chức năng: Đặt hoặc xóa giá trị logic của các chân (bit 0-15 để đặt, bit 16-31 để xóa).
+
+### 8. GPIOx_LCKR (GPIO port configuration lock register)
+- Kích thước: 32-bit
+- Chức năng: Khóa cấu hình của các chân.
+
+### 9. GPIOx_AFRL (GPIO alternate function low register)
+- Kích thước: 32-bit
+- Chức năng: Cấu hình chức năng thay thế (alternate function) cho các chân từ 0 đến 7.
+
+### 10. GPIOx_AFRH (GPIO alternate function high register)
+- Kích thước: 32-bit
+- Chức năng: Cấu hình chức năng thay thế (alternate function) cho các chân từ 8 đến 15.
+
+Mức điện áp đầu ra GPIO STM32 là 3.3v và điện áp đầu vào GPIO cũng là 3.3v trong khi một số chân đầu vào này có dung sai 5v
+Các chân GPIO STM32 có giới hạn dòng điện tối đa là 25mA trên mỗi chân IO
+Tốc độ bus APB2 xác định tốc độ lấy mẫu cho tất cả các chân được cấu hình đầu vào GPIO

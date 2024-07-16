@@ -1,1 +1,9 @@
-Overview 
+
+# ADC Overview
+ADC (Analog-to-Digital Converter) là một ngoại vi chuyển đổi tín hiệu tương tự (analog) sang tín hiệu số (digital) để vi điều khiển có thể xử lý.
+
+Các chế độ chính của ADC bao gồm:
+- Single Conversion: Chuyển đổi một lần.
+- Continuous Conversion: Chuyển đổi liên tục.
+- Scan Mode: Chuyển đổi nhiều kênh liên tiếp.
+- Discontinuous Mode: Chuyển đổi ngắt quãng.

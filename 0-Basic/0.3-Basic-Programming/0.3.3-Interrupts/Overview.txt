@@ -1,1 +1,7 @@
-Overview 
+# Interrupts Overview
+Interrupts (ngắt) cho phép vi điều khiển tạm dừng chương trình chính để xử lý các sự kiện ngoại vi ngay lập tức, sau đó trở lại tiếp tục công việc đang làm. Điều này rất hữu ích khi cần phản hồi nhanh chóng đối với các sự kiện bất ngờ.
+
+Có nhiều loại ngắt khác nhau như:
+- External Interrupts: Ngắt từ các chân GPIO.
+- Timer Interrupts: Ngắt từ các bộ định thời.
+- Peripheral Interrupts: Ngắt từ các ngoại vi như ADC, UART, I2C, SPI, v.v.

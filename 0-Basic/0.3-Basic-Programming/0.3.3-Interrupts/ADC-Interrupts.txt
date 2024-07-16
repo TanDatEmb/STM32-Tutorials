@@ -1,0 +1,47 @@
+
+# ADC Interrupts
+ADC Interrupts cho phép bạn xử lý ngắt khi quá trình chuyển đổi ADC hoàn thành.
+
+Các bước cấu hình:
+1. Kích hoạt đồng hồ cho ADC và GPIO.
+2. Cấu hình chân GPIO làm đầu vào analog.
+3. Cấu hình ADC cho chế độ chuyển đổi cần thiết.
+4. Bật ngắt cho ADC trong thanh ghi CR1.
+5. Cấu hình NVIC để bật ngắt.
+
+Ví dụ:
+```cpp
+#include "stm32f4xx.h"
+
+void ADC_IRQHandler(void) {
+    // Xử lý ngắt
+    if (ADC1->SR & ADC_SR_EOC) {
+        // Clear end of conversion flag
+        ADC1->SR &= ~ADC_SR_EOC;
+        // Đọc giá trị chuyển đổi
+        int result = ADC1->DR;
+        // Code xử lý ngắt
+    }
+}
+
+int main(void) {
+    // Kích hoạt đồng hồ cho ADC1 và GPIOA
+    RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+    
+    // Cấu hình PA0 làm đầu vào analog
+    GPIOA->MODER |= GPIO_MODER_MODER0;
+
+    // Cấu hình ADC1
+    ADC1->SQR3 = 0; // Chọn kênh 0
+    ADC1->CR1 |= ADC_CR1_EOCIE; // Bật ngắt end of conversion
+    ADC1->CR2 |= ADC_CR2_ADON | ADC_CR2_CONT; // Bật ADC và chế độ Continuous Conversion
+    ADC1->CR2 |= ADC_CR2_SWSTART; // Bắt đầu chuyển đổi
+
+    // Bật ngắt trong NVIC
+    NVIC_EnableIRQ(ADC_IRQn);
+
+    while (1) {
+        // Chương trình chính
+    }
+}

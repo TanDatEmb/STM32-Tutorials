@@ -19,3 +19,29 @@ GPIOG->PUPDR |= GPIO_PUPDR_PUPD0_0;
 
 // Ghi giá trị cao vào PG0
 GPIOG->ODR |= GPIO_ODR_OD0;
+
+6. Ví dụ 
+  // Configure GPIO Pin PB0 As Output Pin
+  RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; // Enable GPIOB Clock
+  GPIOB->CRL |= GPIO_CRL_MODE0;       // Set Pin B0 As Output With High-Frequency Speed (Mode0[1:0]=11)
+  GPIOB->CRL &= ~(GPIO_CRL_CNF0);     // Set Pin B0 Output Mode To Push-Pull (CNF0[1:0]=00)
+ 
+  // Configure GPIO Pin PB1 As Input Pin with Pull-up Resistor
+  GPIOB->CRL &= ~(GPIO_CRL_MODE1); // Clear Mode bits to configure as input (Mode1[1:0]=00)
+  GPIOB->CRL &= ~(GPIO_CRL_CNF1);  // Clear CNF1[1:0] bits
+  GPIOB->CRL |= GPIO_CRL_CNF1_1;   // Set CNF1[1] to configure as input with pull-up/pull-down (CNF1[1:0]=10)
+  GPIOB->ODR |= GPIO_ODR_ODR1;     // Set ODR1 to enable pull-up resistor [ pull-down would be GPIOB->ODR &= ~(GPIO_ODR_ODR1) ]
+ 
+7. Sử dụng Macro
+
+#define GPIO_SET_PIN(port, pin)     ((port)->BSRR = (pin))
+GPIO_SET_PIN(GPIOB, GPIO_PIN_0);
+
+#define GPIO_CLEAR_PIN(port, pin)     ((port)->BSRR = (pin << 16u))
+GPIO_CLEAR_PIN(GPIOB, GPIO_PIN_0);
+
+#define GPIO_TOGGLE_PIN(port, pin)     ((port)->ODR  ^= (pin))
+GPIO_TOGGLE_PIN(GPIOB, GPIO_PIN_0);
+
+#define GPIO_READ_PIN(port, pin)     ((port)->IDR & (pin))
+pin_state = GPIO_READ_PIN(GPIOB, GPIO_PIN_0);

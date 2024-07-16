@@ -1,1 +1,12 @@
-Scan-Mode 
+# Scan Mode
+Chế độ Scan Mode cho phép ADC chuyển đổi nhiều kênh liên tiếp.
+
+Các bước cấu hình:
+1. Kích hoạt đồng hồ cho ADC và GPIO.
+2. Cấu hình các chân GPIO làm đầu vào analog.
+3. Cấu hình ADC cho chế độ Scan Mode.
+
+Ví dụ:
+```cpp
+// Kích hoạt đồng hồ cho ADC1 và GPIOA
+RCC->APB2ENR |= RCC_APB2ENR_ADC1
