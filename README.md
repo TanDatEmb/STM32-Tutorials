@@ -1,2 +1,2 @@
 # STM32-Tutorials
-Updates every Tueday
+Updates every Tuesday
